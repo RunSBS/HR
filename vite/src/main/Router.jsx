@@ -30,11 +30,13 @@ import AdminPolicy from "../features/work/pages/AdminPolicy.jsx";
 import LeaveApproval from "../features/work/pages/LeaveApproval.jsx";
 import AnnualPromotion from "../features/work/pages/AnnualPromotion.jsx";
 import Dispatch from "../features/hrm/pages/Dispatch.jsx";
+import EmpSign from "./EmpSign.jsx";
 function Router() {
     return (
         <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/sign" element={<Sign />} />
+            <Route path="/empsign" element={<EmpSign />} />
             <Route path="/main" element={<Home />}>
                 <Route index  element={<EmpMain />}/>   {/* /main */}
 

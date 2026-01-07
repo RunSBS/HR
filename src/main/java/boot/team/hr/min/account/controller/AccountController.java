@@ -8,13 +8,20 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/signup")
 public class AccountController {
 
     private final AccountService accountService;
 
-    @PostMapping("/signup")
+    // 관리자 회원가입
+    @PostMapping("/admin")
     public ResponseEntity<?> adminSignUp(@RequestBody AccountDTO request) {
         Long adminId = accountService.adminSignUp(request);
         return ResponseEntity.ok(adminId);
+    }
+    @PostMapping("/emp")
+    public ResponseEntity<?> employeeSignUp(@RequestBody AccountDTO request) {
+        Long empId = accountService.employeeSignUp(request);
+        return ResponseEntity.ok(empId);
     }
 }

@@ -1,7 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../styles/home.css";
 import { Container, Row, Col, Nav, Navbar, Collapse } from "react-bootstrap";
-import { Link, Outlet } from "react-router-dom";
+import {Link, Outlet, useNavigate} from "react-router-dom";
 import React, { useState } from "react";
 
 const Home = () => {
@@ -11,6 +11,12 @@ const Home = () => {
     const [openApproval, setOpenApproval] = useState(false);
     const [openEval, setOpenEval] = useState(false);
     const [openReward, setOpenReward] = useState(false);
+    const navigate = useNavigate();
+
+    const handleLogout = async () => {
+        await fetch("/back/logout", { method: "POST", credentials: "include" });
+        navigate("/"); // 로그아웃 후 로그인 페이지 이동
+    };
 
     return (
         <div className="admin-page">
@@ -22,7 +28,7 @@ const Home = () => {
                     </Navbar.Brand>
                     <Nav className="ms-auto">
                         <Nav.Link>settings</Nav.Link>
-                        <Nav.Link as={Link} to="/">logout</Nav.Link>
+                        <Nav.Link onClick={handleLogout} style={{ cursor: "pointer" }}>Logout</Nav.Link>
                     </Nav>
                 </Container>
             </Navbar>

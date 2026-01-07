@@ -3,29 +3,53 @@ package boot.team.hr.min.account.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+
+import java.util.List;
 
 @Configuration
+@EnableWebSecurity
 public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-
         http
-                // 기본 로그인 폼 비활성화
-                .formLogin(form -> form.disable())
-
-                // 기본 로그아웃도 같이 끔 (선택)
-                .logout(logout -> logout.disable())
-
-                // CSRF 일단 끔 (React 테스트용)
+                .cors(cors -> cors.configurationSource(request -> {
+                    var corsConfig = new org.springframework.web.cors.CorsConfiguration();
+                    corsConfig.setAllowedOrigins(List.of("http://localhost:5173")); // 프론트 주소
+                    corsConfig.setAllowedMethods(List.of("GET","POST","PUT","DELETE","OPTIONS"));
+                    corsConfig.setAllowCredentials(true);
+                    corsConfig.setAllowedHeaders(List.of("*"));
+                    return corsConfig;
+                }))
                 .csrf(csrf -> csrf.disable())
 
-                // 모든 요청 허용 (일단 막지 않음)
+                // 회원가입 API는 인증 없이 접근 가능, 나머지는 인증 필요
                 .authorizeHttpRequests(auth -> auth
-                        .anyRequest().permitAll()
+                        .requestMatchers("/signup/**").permitAll()  // 회원가입 허용
+                        .anyRequest().authenticated()              // 그 외 요청은 인증 필요
+                )
+
+                // 로그인 설정
+                .formLogin(form -> form
+                        .loginProcessingUrl("/login")
+                        .usernameParameter("email")
+                        .passwordParameter("password")
+                        .defaultSuccessUrl("/main", true)
+                )
+
+                // 로그아웃 설정
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessHandler((request, response, authentication) -> {
+                            response.setStatus(200);
+                        })
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID")
+                        .permitAll()
                 );
 
         return http.build();
