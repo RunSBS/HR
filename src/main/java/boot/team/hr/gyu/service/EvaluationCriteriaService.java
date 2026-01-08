@@ -3,7 +3,7 @@ package boot.team.hr.gyu.service;
 import boot.team.hr.gyu.dto.EvaluationCriteriaDTO;
 import boot.team.hr.gyu.entity.EvaluationCriteria;
 import boot.team.hr.gyu.repository.EvaluationCriteriaRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,83 +11,63 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@Transactional
+@RequiredArgsConstructor
 public class EvaluationCriteriaService {
 
-    private final EvaluationCriteriaRepository repository;
+    private final EvaluationCriteriaRepository criteriaRepository;
 
-    @Autowired
-    public EvaluationCriteriaService(EvaluationCriteriaRepository repository) {
-        this.repository = repository;
-    }
-
-    // 전체 조회
     @Transactional(readOnly = true)
     public List<EvaluationCriteriaDTO> getAllCriteria() {
-        return repository.findAllByOrderByCreatedAtDesc().stream()
-                .map(EvaluationCriteriaDTO::fromEntity)
+        return criteriaRepository.findAll().stream()
+                .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
 
-    // ID로 조회
     @Transactional(readOnly = true)
     public EvaluationCriteriaDTO getCriteriaById(Long id) {
-        EvaluationCriteria entity = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("평가 항목을 찾을 수 없습니다. ID: " + id));
-        return EvaluationCriteriaDTO.fromEntity(entity);
+        EvaluationCriteria criteria = criteriaRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("평가 항목을 찾을 수 없습니다."));
+        return convertToDTO(criteria);
     }
 
-    // 생성
-    public EvaluationCriteriaDTO createCriteria(EvaluationCriteriaDTO dto) {
-        // 중복 체크
-        if (repository.existsByCriteriaName(dto.getCriteriaName())) {
-            throw new RuntimeException("이미 존재하는 평가 항목명입니다: " + dto.getCriteriaName());
-        }
+    @Transactional
+    public Long createCriteria(EvaluationCriteriaDTO dto) {
+        EvaluationCriteria criteria = EvaluationCriteria.builder()
+                .criteriaName(dto.getCriteriaName())
+                .weight(dto.getWeight())
+                .description(dto.getDescription())
+                .build();
 
-        EvaluationCriteria entity = new EvaluationCriteria(
-                dto.getCriteriaName(),
-                dto.getWeight(),
-                dto.getDescription()
-        );
-
-        EvaluationCriteria savedEntity = repository.save(entity);
-        return EvaluationCriteriaDTO.fromEntity(savedEntity);
+        return criteriaRepository.save(criteria).getCriteriaId();
     }
 
-    // 수정
-    public EvaluationCriteriaDTO updateCriteria(Long id, EvaluationCriteriaDTO dto) {
-        EvaluationCriteria entity = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("평가 항목을 찾을 수 없습니다. ID: " + id));
+    @Transactional
+    public void updateCriteria(Long id, EvaluationCriteriaDTO dto) {
+        EvaluationCriteria criteria = criteriaRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("평가 항목을 찾을 수 없습니다."));
 
-        // 항목명 중복 체크 (자기 자신 제외)
-        if (!entity.getCriteriaName().equals(dto.getCriteriaName()) &&
-            repository.existsByCriteriaName(dto.getCriteriaName())) {
-            throw new RuntimeException("이미 존재하는 평가 항목명입니다: " + dto.getCriteriaName());
-        }
+        criteria.setCriteriaName(dto.getCriteriaName());
+        criteria.setWeight(dto.getWeight());
+        criteria.setDescription(dto.getDescription());
 
-        entity.setCriteriaName(dto.getCriteriaName());
-        entity.setWeight(dto.getWeight());
-        entity.setDescription(dto.getDescription());
-
-        EvaluationCriteria updatedEntity = repository.save(entity);
-        return EvaluationCriteriaDTO.fromEntity(updatedEntity);
+        criteriaRepository.save(criteria);
     }
 
-    // 삭제
+    @Transactional
     public void deleteCriteria(Long id) {
-        if (!repository.existsById(id)) {
-            throw new RuntimeException("평가 항목을 찾을 수 없습니다. ID: " + id);
+        if (!criteriaRepository.existsById(id)) {
+            throw new IllegalArgumentException("평가 항목을 찾을 수 없습니다.");
         }
-        repository.deleteById(id);
+        criteriaRepository.deleteById(id);
     }
 
-    // 가중치 수정
-    public EvaluationCriteriaDTO updateWeight(Long id, Integer weight) {
-        EvaluationCriteria entity = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("평가 항목을 찾을 수 없습니다. ID: " + id));
-
-        entity.setWeight(weight);
-        EvaluationCriteria updatedEntity = repository.save(entity);
-        return EvaluationCriteriaDTO.fromEntity(updatedEntity);
+    private EvaluationCriteriaDTO convertToDTO(EvaluationCriteria criteria) {
+        return EvaluationCriteriaDTO.builder()
+                .criteriaId(criteria.getCriteriaId())
+                .criteriaName(criteria.getCriteriaName())
+                .weight(criteria.getWeight())
+                .description(criteria.getDescription())
+                .createdAt(criteria.getCreatedAt())
+                .build();
     }
 }

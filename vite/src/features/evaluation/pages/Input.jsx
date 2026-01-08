@@ -1,8 +1,8 @@
 const Input = () => {
-    return(
-        <>
-            <h1>input</h1>
-        </>
-    )
-}
+  return (
+      <>
+      <div>회원가입 및 로그인</div>
+      </>
+  );
+};
 export default Input;

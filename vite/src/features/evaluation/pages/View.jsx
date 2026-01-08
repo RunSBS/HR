@@ -1,8 +1,8 @@
 const View = () => {
-    return(
-        <>
-            <h1>view</h1>
-        </>
-    )
-}
+  return (
+      <>
+      <div>회원가입 및 로그인</div>
+      </>
+  );
+};
 export default View;
