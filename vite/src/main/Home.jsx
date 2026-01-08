@@ -62,6 +62,7 @@ const Home = () => {
                                         <Nav.Link as={Link} to="/main/work/status">휴가 신청 현황</Nav.Link>
                                         <Nav.Link as={Link} to="/main/work/usage">연차 사용 현황</Nav.Link>
                                         <Nav.Link as={Link} to="/main/work/policy">근태 정책 조회</Nav.Link>
+
                                         <Nav.Link as={Link} to="/main/work/admin-attandance">출퇴근 내역 관리</Nav.Link>
                                         <Nav.Link as={Link} to="/main/work/admin-policy">근태 정책 관리</Nav.Link>
                                         <Nav.Link as={Link} to="/main/work/leave-approval">휴가 신청 승인</Nav.Link>
