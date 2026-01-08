@@ -29,11 +29,14 @@ import AdminAttendance from "../features/work/pages/AdminAttendance.jsx";
 import AdminPolicy from "../features/work/pages/AdminPolicy.jsx";
 import LeaveApproval from "../features/work/pages/LeaveApproval.jsx";
 import AnnualPromotion from "../features/work/pages/AnnualPromotion.jsx";
+import Dispatch from "../features/hrm/pages/Dispatch.jsx";
+import EmpSign from "./EmpSign.jsx";
 function Router() {
     return (
         <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/sign" element={<Sign />} />
+            <Route path="/empsign" element={<EmpSign />} />
             <Route path="/main" element={<Home />}>
                 <Route index  element={<EmpMain />}/>   {/* /main */}
 
@@ -41,6 +44,7 @@ function Router() {
                     <Route path="all"   element={<All />}/>
                     <Route path="dept"  element={<Dept />}/>
                     <Route path="emp"   element={<Emp />}/>
+                    <Route path="dispatch"   element={<Dispatch />}/>
                 </Route>
 
                 <Route path="work">
@@ -52,29 +56,29 @@ function Router() {
                     <Route path="policy" element={<WorkPolicy />} />
 
                     {/* 관리자 근태 */}
-                    <Route path="admin-attandance" element={<AdminAttendance />} />
-                    <Route path="admin-policy" element={<AdminPolicy/>} />
-                    <Route path="leave-approval" element={<LeaveApproval />} />
-                    <Route path="annual-promotion" element={<AnnualPromotion />} />
+                    <Route path="admin/attendance" element={<AdminAttendance />} />
+                    <Route path="admin/policy" element={<AdminPolicy/>} />
+                    <Route path="admin/leaveapproval" element={<LeaveApproval />} />
+                    <Route path="admin/annualpromotion" element={<AnnualPromotion />} />
                 </Route>
 
                 <Route path="schedule">
                 <Route path="calendar"   element={<Calender />}/>
                 <Route path="project" element={<Project />}/>
-                <Route path="projectmanage" element={<ProjectManage />}/>
+                <Route path="admin/projectmanage" element={<ProjectManage />}/>
                 <Route path="meeting" element={<Meeting />}/>
                 </Route>
 
                 <Route path="eval">
-                <Route path="item"   element={<Item />}/>
-                <Route path="input" element={<Input />}/>
+                <Route path="admin/item"   element={<Item />}/>
+                <Route path="admin/input" element={<Input />}/>
                 <Route path="view" element={<View />}/>
-                <Route path="recommend" element={<Recommend />}/>
+                <Route path="admin/recommend" element={<Recommend />}/>
                 </Route>
 
                 <Route path="reward">
-                <Route path="policy"   element={<Policy />}/>
-                <Route path="candidate"  element={<Candidate />}/>
+                <Route path="admin/policy"   element={<Policy />}/>
+                <Route path="admin/candidate"  element={<Candidate />}/>
                 <Route path="history"  element={<History />}/>
                 </Route>
 

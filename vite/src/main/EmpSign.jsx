@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const Sign = () => {
+const EmpSign = () => {
     const navigate = useNavigate();
 
     const [email, setEmail] = useState("");
@@ -14,7 +14,7 @@ const Sign = () => {
         }
 
         try {
-            const response = await fetch("/back/signup/admin", {
+            const response = await fetch("/back/signup/emp", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -29,7 +29,7 @@ const Sign = () => {
                 throw new Error("회원가입 실패");
             }
 
-            alert("관리자 회원가입 성공");
+            alert("사원 회원가입 성공");
             navigate("/"); // 로그인 페이지로 이동
 
         } catch (error) {
@@ -53,7 +53,7 @@ const Sign = () => {
                 </h1>
             </div>
 
-            <h2>관리자 회원가입</h2>
+            <h2>사원 회원가입</h2>
 
             <div>
                 email:
@@ -78,4 +78,4 @@ const Sign = () => {
     );
 };
 
-export default Sign;
+export default EmpSign;

@@ -1,7 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../styles/home.css";
 import { Container, Row, Col, Nav, Navbar, Collapse } from "react-bootstrap";
-import { Link, Outlet } from "react-router-dom";
+import {Link, Outlet, useNavigate} from "react-router-dom";
 import React, { useState } from "react";
 
 const Home = () => {
@@ -11,6 +11,12 @@ const Home = () => {
     const [openApproval, setOpenApproval] = useState(false);
     const [openEval, setOpenEval] = useState(false);
     const [openReward, setOpenReward] = useState(false);
+    const navigate = useNavigate();
+
+    const handleLogout = async () => {
+        await fetch("/back/logout", { method: "POST", credentials: "include" });
+        navigate("/"); // 로그아웃 후 로그인 페이지 이동
+    };
 
     return (
         <div className="admin-page">
@@ -22,7 +28,7 @@ const Home = () => {
                     </Navbar.Brand>
                     <Nav className="ms-auto">
                         <Nav.Link>settings</Nav.Link>
-                        <Nav.Link as={Link} to="/">logout</Nav.Link>
+                        <Nav.Link onClick={handleLogout} style={{ cursor: "pointer" }}>Logout</Nav.Link>
                     </Nav>
                 </Container>
             </Navbar>
@@ -46,6 +52,7 @@ const Home = () => {
                                         <Nav.Link as={Link} to="/main/hr/all">전체</Nav.Link>
                                         <Nav.Link as={Link} to="/main/hr/dept">부서</Nav.Link>
                                         <Nav.Link as={Link} to="/main/hr/emp">사원</Nav.Link>
+                                        <Nav.Link as={Link} to="/main/hr/dispatch">파견</Nav.Link>
                                     </Nav>
                                 </div>
                             </Collapse>
@@ -67,6 +74,10 @@ const Home = () => {
                                         <Nav.Link as={Link} to="/main/work/admin-policy">근태 정책 관리</Nav.Link>
                                         <Nav.Link as={Link} to="/main/work/leave-approval">휴가 신청 승인</Nav.Link>
                                         <Nav.Link as={Link} to="/main/work/annual-promotion">연차 촉진 관리</Nav.Link>
+                                        <Nav.Link as={Link} to="/main/work/admin/attendance">출퇴근 내역 관리</Nav.Link>
+                                        <Nav.Link as={Link} to="/main/work/admin/policy">근태 정책 관리</Nav.Link>
+                                        <Nav.Link as={Link} to="/main/work/admin/leaveapproval">휴가 신청 승인</Nav.Link>
+                                        <Nav.Link as={Link} to="/main/work/admin/annualpromotion">연차 촉진 관리</Nav.Link>
                                     </Nav>
                                 </div>
                             </Collapse>
@@ -80,7 +91,7 @@ const Home = () => {
                                     <Nav className="flex-column ms-3">
                                         <Nav.Link as={Link} to="/main/schedule/calendar">캘린더</Nav.Link>
                                         <Nav.Link as={Link} to="/main/schedule/project">프로젝트 생성</Nav.Link>
-                                        <Nav.Link as={Link} to="/main/schedule/projectmanage">프로젝트 관리</Nav.Link>
+                                        <Nav.Link as={Link} to="/main/schedule/admin/projectmanage">프로젝트 관리</Nav.Link>
                                         <Nav.Link as={Link} to="/main/schedule/meeting">회의실</Nav.Link>
                                     </Nav>
                                 </div>
@@ -93,10 +104,10 @@ const Home = () => {
                             <Collapse in={openEval}>
                                 <div>
                                     <Nav className="flex-column ms-3">
-                                        <Nav.Link as={Link} to="/main/eval/item">평가 항목 관리</Nav.Link>
-                                        <Nav.Link as={Link} to="/main/eval/input">사원 평가 입력</Nav.Link>
+                                        <Nav.Link as={Link} to="/main/eval/admin/item">평가 항목 관리</Nav.Link>
+                                        <Nav.Link as={Link} to="/main/eval/admin/input">사원 평가 입력</Nav.Link>
                                         <Nav.Link as={Link} to="/main/eval/view">평가 조회</Nav.Link>
-                                        <Nav.Link as={Link} to="/main/eval/recommend">사원 추천</Nav.Link>
+                                        <Nav.Link as={Link} to="/main/eval/admin/recommend">사원 추천</Nav.Link>
                                     </Nav>
                                 </div>
                             </Collapse>
@@ -108,8 +119,8 @@ const Home = () => {
                             <Collapse in={openReward}>
                                 <div>
                                     <Nav className="flex-column ms-3">
-                                        <Nav.Link as={Link} to="/main/reward/policy">포상 정책 관리</Nav.Link>
-                                        <Nav.Link as={Link} to="/main/reward/candidate">포상 후보 추천</Nav.Link>
+                                        <Nav.Link as={Link} to="/main/reward/admin/policy">포상 정책 관리</Nav.Link>
+                                        <Nav.Link as={Link} to="/main/reward/admin/candidate">포상 후보 추천</Nav.Link>
                                         <Nav.Link as={Link} to="/main/reward/history">포상 이력</Nav.Link>
                                     </Nav>
                                 </div>
