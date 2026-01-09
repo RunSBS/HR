@@ -1,0 +1,199 @@
+.input-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* 권한 없음 메시지 */
+.no-permission {
+  text-align: center;
+  padding: 3rem;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.no-permission h2 {
+  color: #e53e3e;
+  margin-bottom: 1rem;
+}
+
+.no-permission p {
+  color: #4a5568;
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+}
+
+.no-permission .user-info {
+  background: #f7fafc;
+  padding: 1.5rem;
+  border-radius: 8px;
+  display: inline-block;
+}
+
+.no-permission .user-info p {
+  margin: 0.5rem 0;
+  color: #2d3748;
+  font-size: 1rem;
+}
+
+/* 사용자 정보 박스 */
+.user-info-box {
+  background: linear-gradient(135deg, #1e3a5f 0%, #2c5282 100%);
+  color: white;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+}
+
+.user-info-box p {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+/* 평가 폼 */
+.evaluation-form {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+  margin-bottom: 2rem;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  color: #1e3a5f;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+.form-group input[type="text"],
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+.form-group input[type="text"]:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #4A90E2;
+}
+
+.form-group select {
+  cursor: pointer;
+  background-color: white;
+}
+
+.form-group textarea {
+  resize: vertical;
+  font-family: inherit;
+}
+
+/* 평가 항목 점수 */
+.criteria-scores {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.criteria-item {
+  background: #f8fafc;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border-left: 4px solid #4A90E2;
+}
+
+.criteria-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.criteria-name {
+  font-weight: 600;
+  color: #1e3a5f;
+  font-size: 1.1rem;
+}
+
+.criteria-weight {
+  color: #4A90E2;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.criteria-description {
+  color: #64748b;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.score-input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-align: center;
+  transition: all 0.3s;
+}
+
+.score-input:focus {
+  outline: none;
+  border-color: #4A90E2;
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+}
+
+/* 제출 버튼 */
+.submit-button {
+  width: 100%;
+  padding: 1rem;
+  background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
+}
+
+.submit-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(74, 144, 226, 0.4);
+}
+
+.submit-button:active {
+  transform: translateY(0);
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+  .input-container {
+    padding: 1rem;
+  }
+
+  .evaluation-form {
+    padding: 1.5rem;
+  }
+
+  .criteria-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+}

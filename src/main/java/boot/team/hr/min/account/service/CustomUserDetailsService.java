@@ -34,7 +34,7 @@ public class CustomUserDetailsService implements UserDetailsService {
             Emp emp = empRepository.findByEmail(email)
                     .orElseThrow(() -> new UsernameNotFoundException("Emp not found"));
 
-            finalRole = emp.getRole(); // Emp.role 사용
+            finalRole = emp.getPosition(); // Emp.position 사용
         }
         else {
             throw new UsernameNotFoundException("Invalid role");
