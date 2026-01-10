@@ -25,9 +25,8 @@ const EmpUpdate = () => {
         try {
             // Spring Boot의 @RequestBody가 이 JSON 객체를 EmpDto로 변환합니다.
             const res = await axios.put("/back/hyun/emp/update",
-                form, {
-                    withCredentials: true
-                }
+                form,
+                {withCredentials: true}
             );
             console.log("수정 성공 :", res.data);
             alert("사원 수정이 완료되었습니다.");

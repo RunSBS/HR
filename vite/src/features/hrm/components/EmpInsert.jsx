@@ -24,10 +24,10 @@ const EmpInsert = () => {
 
         try {
             // Spring Boot의 @RequestBody가 이 JSON 객체를 EmpDto로 변환합니다.
-            const res = await axios.post("/back/hyun/emp/insert", {
-                data : form,
-                withCredentials: true
-            });
+            const res = await axios.post("/back/hyun/emp/insert",
+                form,
+                {withCredentials: true}
+            );
             console.log("등록 성공 :", res.data);
             alert("사원 등록이 완료되었습니다.");
         } catch(e) {
