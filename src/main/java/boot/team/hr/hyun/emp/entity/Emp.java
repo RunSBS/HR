@@ -16,7 +16,7 @@ public class Emp {
     private Long id;
 
     @Column(name = "emp_id") // DB 컬럼명은 emp_id
-    private String empId;    // Java 필드명은 empId
+    private Integer empId;    // Java 필드명은 empId
 
     @Column(name = "emp_name")
     private String empName;
@@ -24,6 +24,7 @@ public class Emp {
     @Column(name = "dept_id")
     private Integer deptId;
 
+    @Column(nullable = false, unique = true)
     private String email;
     private String role; // CEO, Manager, TeamLeader, Employee ( CEO -> 담당관 -> 팀장 -> 사원)
 //    private Integer managerId; // 직속상관 ( 사수 )
